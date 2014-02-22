@@ -8,8 +8,8 @@ Author URL: http://www.freshworkstudio.com
 License: GPLv2
 */
 global $conf;
-include("config.php");
-if(get_conf("FB.APPID") != ""){
+load_config_file($plugin["directory"]."config.php");
+if(get_config("FB.APPID") != ""){
 	include("facebook.php");
 	$config = array();
 	$config["appId"] = get_conf("FB.APPID");

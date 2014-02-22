@@ -16,12 +16,19 @@ $cache 		= new Cache();
 $i18n 		= new i18n();
 
 $i18n->import_folder(LOCALE_DIR);
+
+//Import Routing Files of Core and App
+require_once (CORE_DIR . 'routing.php');
+require_once (CONFIG_DIR . 'routing.php');
+
+require_once("hooks.php");
 Plugin::init();
-trigger("fw.init");
+trigger("fw_init");
 
 /* URI REQUEST ROUTING */
 $requested_uri = (isset($_GET['fw-url']))?$_GET['fw-url']:(isset($_SERVER['PATH_INFO'])?substr($_SERVER['PATH_INFO'],1):"");
-$requested_uri = apply_filters('fw.requested_uri',$requested_uri);
+$requested_uri = apply_filters('fw_requested_uri',$requested_uri);
 set_info("url",$requested_uri);
 
 $request_file = $router->route_request($requested_uri);
+print_r($request_file);

@@ -51,10 +51,10 @@ class i18n{
 	}
 	
 	function get_lang(){
-		return $this->cur_lang;	
+		return apply_filters("get_language",$this->cur_lang);	
 	}
 	function determine_lang($set = true){
-		$lang = apply_filters('lang.get_default_lang',$this->default_lang);
+		$lang = apply_filters('get_default_lang',$this->default_lang);
 		$lang = $this->default_lang;
 		if(isset($_GET[$this->get])){
 			$lang = ($_GET[$this->get]);
@@ -130,7 +130,7 @@ class i18n{
 }
 
 //HERRAMIENTAS DE IDIOMA
-function ___($str){
+function _($str){
 	global $i18n;
 	$args = (is_array($str))?$str:func_get_args();
 	echo __($args); 

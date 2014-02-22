@@ -38,10 +38,10 @@ class Plugin{
 		return $plugins;
 	}
 	static function init(){
-		$plugins = apply_filters('fw.plugins_list',self::get_list());
+		$plugins = apply_filters('fw_plugins_list',self::get_list());
 		foreach($plugins as $plugin){
 			if($plugin["enabled"] == true){
-				$f = PLUGINS_DIR.$plugin["directory"]."boot.php";
+				$f = $plugin["directory"]."boot.php";
 				if(file_exists($f))include($f);
 			}
 		}

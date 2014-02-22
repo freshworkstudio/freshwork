@@ -1,0 +1,10 @@
+#php_value register_globals 0
+#php_value max_execution_time 90
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteRule \.git - [F,L]
+	
+	RewriteCond %{SCRIPT_FILENAME} \.html|\.php|\.htm|\.php5|\.php4	[OR]
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>

@@ -13,6 +13,7 @@ define('WWW_DIR',APP_DIR.'www'.DS);
 define('LOGS_DIR',TMP_DIR.'logs'.DS);
 define('CORE_DIR',ABS_DIR.'fw-core'.DS);
 define('CORE_LIBS_DIR',CORE_DIR.'libs'.DS);
+define('CORE_WWW_DIR',CORE_DIR.'www'.DS);
 define('CACHE_DIR',TMP_DIR.'cache'.DS);
 define('LOCALE_DIR',APP_DIR.'locale'.DS);
 

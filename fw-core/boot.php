@@ -16,9 +16,9 @@ $config = new Configuration(); //Configs of configurations files
 $fw_info = new Configuration(); //Runtime variables 
 load_config_file(CORE_DIR.'base-config.php'); //Load base config
 
-if(!file_exists(APP_DIR.'config.php')){
+if(!file_exists(CONFIG_DIR.'config.php')){
 	require_once(CORE_DIR.'install.php');	
 }else{
-	load_config_file(APP_DIR.'config.php');
+	load_config_file(CONFIG_DIR.'config.php');
 	require_once('load.php');
 }

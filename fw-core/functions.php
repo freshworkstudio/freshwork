@@ -3,7 +3,7 @@ function get_option($key){
 	return false;	
 }
 
-/* Configuration Shrotcuts */
+/* App Info Shortcuts */
 function get_info(){
 	global $fw_info;
 	return call_user_func_array(array($fw_info,"get"),func_get_args());		
@@ -17,7 +17,7 @@ function set_info(){
 	return call_user_func_array(array($fw_info,"set"),func_get_args());	
 }
 
-/* Configuration Shrotcuts */
+/* Configuration Shortcuts */
 function get_config(){
 	global $config;
 	return call_user_func_array(array($config,"get"),func_get_args());		
@@ -33,7 +33,7 @@ function set_config(){
 function load_config_file($file,$replace=true){
 	$conf = array();
 	require_once($file);
-	set_config($conf,$replace);	 //Add the configs to the  ain array
+	set_config($conf,$replace);	 //Add the configs to the main array
 }
 
 
@@ -94,4 +94,10 @@ function get_file_data( $file, $default_headers, $context = '' ) {
  */
 function _cleanup_header_comment($str) {
 	return trim(preg_replace("/\s*(?:\*\/|\?>).*/", '', $str));
+}
+
+
+function fw_error($msg,$error_type=E_NOTICE){
+	trigger("trigger_error",$error_type);
+	trigger_error($msg,$error_type);	
 }

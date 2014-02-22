@@ -8,19 +8,28 @@ class Router{
 		$this->routing[$pattern] = $result;
 	}
 	function get_redirection($url){
-		
-		$preg = false;
+		$this->routing["productos/(.*)/(.*)"] = WWW_DIR."prods.php";
 		foreach($this->routing as $origen => $destino){
 			$replac = "/^".str_replace("/","\/",$origen)."$/";
 			if(preg_match($replac,$url)){
-				$preg = true;
 				$file = preg_replace("/".str_replace("/","\/",$origen)."/",$destino,$url);
-				//if($file{0} != "/")$file = WWW_DIR.$file;
-				//if(!is_file($file))return false;
+				$file = $this->retrieve_get_params($file);
 				return $file;
 			}
 		}
 		return false;
+	}
+	/*
+	Take a file path. If has GET parameters, removes them of the filename and put them in $_GET var
+	*/
+	function retrieve_get_params($filename){
+		if(strpos($filename,"?") !== false){
+			$parts = explode("?",$filename);
+			$query_params = $parts[1];
+			parse_str($q,$_GET);
+			return $parts[0];
+		}
+		return $filename;
 	}
 	function route_request($requested_uri){
 		//Get the file name of this request uri
@@ -39,25 +48,9 @@ class Router{
 				exit;	
 			}
 		}
+		$file = apply_filters("file_to_load",$file);
 		set_info("request_filename",$file);
-		//parse		
-		if(strpos($destination,"?") !== false){
-			$redirect = explode("?",$destination);
-			$q = $redirect[1];
-			$redirect = $redirect[0];
-			parse_str($q,$_GET);
-		}
-		
-		if(!is_file($final_request_uri)){
-			
-			//header("Location: ".ABS_URL."404?$url"); 
-			//exit;	
-		}
-		/*if(!is_file($destination)){
-			trigger_error("Can't find the controller file for this request: $destination");	
-			return false;
-		}*/
-		return $destination;
+		return $file;
 	}
 	
 	function get_default_page_name(){

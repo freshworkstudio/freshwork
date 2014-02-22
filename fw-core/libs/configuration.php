@@ -25,7 +25,7 @@ class Configuration{
 		$args = func_get_args();
 		if(count($args) <= 0)trigger_error("The functions expects at least 1 parameter");
 		if(is_array($args[0])){
-			$replace = $args[1]?$args[1]:true;
+			$replace = isset($args[1])?$args[1]:true;
 			foreach($args[0] as $key => $value){
 				$this->configs[$key] = $value;
 			}
