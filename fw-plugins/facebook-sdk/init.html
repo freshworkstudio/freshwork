@@ -1,0 +1,33 @@
+<div id="fb-root"></div>
+<script>
+  // Additional JS functions here
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{APP_ID}', // App ID
+      channelUrl : '//{BASE_URL}channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+	if(jQuery){
+		$(document).trigger("app.fbinit");	
+	}
+    // Additional init code here
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/{LANG}/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+   
+   function facebook_login(cb){
+		FB.login(function(response) {
+			if(typeof cb == "function")cb(response);
+	 	},{scope:'{PERMISSIONS}'});   
+   }
+</script>
