@@ -12,7 +12,8 @@ function __autoload($className) {
 //Include common functions of the framework
 require_once(CORE_DIR.'functions.php');
 
-$config = System_Configuration::instance();
+$config = new Configuration(); //Configs of configurations files
+$fw_info = new Configuration(); //Runtime variables 
 load_config_file(CORE_DIR.'base-config.php'); //Load base config
 
 if(!file_exists(APP_DIR.'config.php')){

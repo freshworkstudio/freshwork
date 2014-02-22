@@ -1,5 +1,21 @@
 <?php
+function get_option($key){
+	return false;	
+}
 
+/* Configuration Shrotcuts */
+function get_info(){
+	global $fw_info;
+	return call_user_func_array(array($fw_info,"get"),func_get_args());		
+}
+function get_all_info(){
+	global $fw_info;
+	return call_user_func_array(array($fw_info,"get_all"),func_get_args());		
+}
+function set_info(){
+	global $fw_info;
+	return call_user_func_array(array($fw_info,"set"),func_get_args());	
+}
 
 /* Configuration Shrotcuts */
 function get_config(){
