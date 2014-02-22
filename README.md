@@ -1,7 +1,5 @@
-freshwork
-=========
-
 Freshwork CMS: Why another framework cms?
+=========
 
 We are updating this wiki documentation weekly or even daily. Freshwork CMS it's an Open Source Project licensed GPLv2.
 
