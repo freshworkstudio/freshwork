@@ -54,7 +54,7 @@ class Router{
 	}
 	
 	function get_default_page_name(){
-		return apply_filter("default_page_name","index");	
+		return apply_filters("default_page_name","index");	
 	}
 	function get_filename($requested_uri){
 		//Retrive file name for this request uri
@@ -81,7 +81,15 @@ class Router{
 				header("Location: ".$requested_uri."/",301);
 				exit;	
 			}
-			//Request URI hasn't a valid extension, so we test with every combination of valid extenions to check if file exists
+			
+			//If the requested file has not a valida extension, its probably beacuse its an asset, like css, js. In that case, redirecto to the direct url of the file.
+			$path = pathinfo($requested_uri);
+			if(isset($path["extension"]) && !in_array($path["extension"],$this->valid_extensions)){
+				header("Location: ".WWW_URL.$requested_uri);
+				exit;		
+			}
+			
+			//Request URI hasn't a valid extension, so we test with every combination of valid extenions to check if file exists		
 			foreach($this->valid_extensions as $ext_valida){
 				$request_file =  WWW_DIR.$requested_uri.".$ext_valida";
 				if(file_exists($request_file)){
@@ -89,6 +97,7 @@ class Router{
 					break;	
 				}
 			}
+			
 		}
 		//If the filename of the 
 		if(!is_file($file))return false;

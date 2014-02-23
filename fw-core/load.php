@@ -14,6 +14,7 @@ $hooks 		= new Hook();
 $router 	= new Router();
 $cache 		= new Cache();
 $i18n 		= new i18n();
+$fw_blocks	= new View_Block();
 
 $i18n->import_folder(LOCALE_DIR);
 
@@ -30,5 +31,31 @@ $requested_uri = (isset($_GET['fw-url']))?$_GET['fw-url']:(isset($_SERVER['PATH_
 $requested_uri = apply_filters('fw_requested_uri',$requested_uri);
 set_info("url",$requested_uri);
 
-$request_file = $router->route_request($requested_uri);
-print_r($request_file);
+//We have the file of the view.
+$view_file = $router->route_request($requested_uri);
+
+//Here we going to choose a templete to load the view on it
+$template_file = apply_filters('default_template',false);
+if(!(bool)$template_file){
+	$tpl_file = WWW_DIR."templates".DS."default.php";
+	if(file_exists($tpl_file))$template_file=$tpl_file;
+}
+set_info("template",$template_file);
+
+
+start_block("content");
+fw_include($view_file);
+end_block();
+
+if(get_info("template")){
+	start_block("layout");
+	fw_include(get_info("template"));
+	end_block();
+	echo get_block("layout");
+}else{
+	echo get_block("content");		
+}
+
+
+
+

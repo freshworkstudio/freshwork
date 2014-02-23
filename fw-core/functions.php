@@ -6,7 +6,7 @@ function get_option($key){
 /* App Info Shortcuts */
 function get_info(){
 	global $fw_info;
-	return call_user_func_array(array($fw_info,"get"),func_get_args());		
+	return apply_filters("get_info",call_user_func_array(array($fw_info,"get"),func_get_args()));		
 }
 function get_all_info(){
 	global $fw_info;
@@ -14,7 +14,7 @@ function get_all_info(){
 }
 function set_info(){
 	global $fw_info;
-	return call_user_func_array(array($fw_info,"set"),func_get_args());	
+	return apply_filters("set_info",call_user_func_array(array($fw_info,"set"),func_get_args()));	
 }
 
 /* Configuration Shortcuts */
@@ -100,4 +100,30 @@ function _cleanup_header_comment($str) {
 function fw_error($msg,$error_type=E_NOTICE){
 	trigger("trigger_error",$error_type);
 	trigger_error($msg,$error_type);	
+}
+
+function fw_include($file){
+	trigger("include",$file);
+	include_once($file);
+}
+//Alias functions of view blocks
+function start_block(){
+	global $fw_blocks;
+	$args = func_get_args(); 
+	return call_user_func_array(array($fw_blocks,'start'), $args);	
+}
+function end_block(){
+	global $fw_blocks;
+	$args = func_get_args(); 
+	return call_user_func_array(array($fw_blocks,'end'), $args);	
+}
+function start_block_if_empty(){
+	global $fw_blocks;
+	$args = func_get_args(); 
+	return call_user_func_array(array($fw_blocks,'start_if_empty'), $args);	
+}
+function get_block(){
+	global $fw_blocks;
+	$args = func_get_args(); 
+	return call_user_func_array(array($fw_blocks,'get'), $args);	
 }

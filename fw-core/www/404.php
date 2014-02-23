@@ -1,62 +1,158 @@
-<?php $page->template = false; ?>
-<html>
-<head></head>
-<body>
-<div class="container">
-  <div class="row">
-    <div class="span12">
-      <div class="hero-unit center">
-          <h1>Page Not Found <small><font face="Tahoma" color="red">Error 404</font></small></h1>
-          <br />
-          <p>The page you requested could not be found, either contact your webmaster or try again. Use your browsers <b>Back</b> button to navigate to the page you have prevously come from</p>
-          <p><b>Or you could just press this neat little button:</b></p>
-          <a href="#" class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Take Me Home</a>
+<?php set_info("layout",false); ?>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Page Not Found :(</title>
+        <style>
+            ::-moz-selection {
+                background: #b3d4fc;
+                text-shadow: none;
+            }
+
+            ::selection {
+                background: #b3d4fc;
+                text-shadow: none;
+            }
+
+            html {
+                padding: 30px 10px;
+                font-size: 20px;
+                line-height: 1.4;
+                color: #737373;
+                background: #f0f0f0;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+
+            html,
+            input {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+
+            body {
+                max-width: 500px;
+                _width: 500px;
+                padding: 30px 20px 50px;
+                border: 1px solid #b3b3b3;
+                border-radius: 4px;
+                margin: 0 auto;
+                box-shadow: 0 1px 10px #a7a7a7, inset 0 1px 0 #fff;
+                background: #fcfcfc;
+            }
+
+            h1 {
+                margin: 0 10px;
+                font-size: 50px;
+                text-align: center;
+            }
+
+            h1 span {
+                color: #bbb;
+            }
+
+            h3 {
+                margin: 1.5em 0 0.5em;
+            }
+
+            p {
+                margin: 1em 0;
+            }
+
+            ul {
+                padding: 0 0 0 40px;
+                margin: 1em 0;
+            }
+
+            .container {
+                max-width: 380px;
+                _width: 380px;
+                margin: 0 auto;
+            }
+
+            /* google search */
+
+            #goog-fixurl ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            #goog-fixurl form {
+                margin: 0;
+            }
+
+            #goog-wm-qt,
+            #goog-wm-sb {
+                border: 1px solid #bbb;
+                font-size: 16px;
+                line-height: normal;
+                vertical-align: top;
+                color: #444;
+                border-radius: 2px;
+            }
+
+            #goog-wm-qt {
+                width: 220px;
+                height: 20px;
+                padding: 5px;
+                margin: 5px 10px 0 0;
+                box-shadow: inset 0 1px 1px #ccc;
+            }
+
+            #goog-wm-sb {
+                display: inline-block;
+                height: 32px;
+                padding: 0 10px;
+                margin: 5px 0 0;
+                white-space: nowrap;
+                cursor: pointer;
+                background-color: #f5f5f5;
+                background-image: -webkit-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+                background-image: -moz-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+                background-image: -ms-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+                background-image: -o-linear-gradient(rgba(255,255,255,0), #f1f1f1);
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                *overflow: visible;
+                *display: inline;
+                *zoom: 1;
+            }
+
+            #goog-wm-sb:hover,
+            #goog-wm-sb:focus {
+                border-color: #aaa;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                background-color: #f8f8f8;
+            }
+
+            #goog-wm-qt:hover,
+            #goog-wm-qt:focus {
+                border-color: #105cb6;
+                outline: 0;
+                color: #222;
+            }
+
+            input::-moz-focus-inner {
+                padding: 0;
+                border: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Not found <span>:(</span></h1>
+            <p>Sorry, but the page you were trying to view does not exist.</p>
+            <p>It looks like this was the result of either:</p>
+            <ul>
+                <li>a mistyped address</li>
+                <li>an out-of-date link</li>
+            </ul>
+            <script>
+                var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
+            </script>
+            <script src="//linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
         </div>
-        <br />
-      <div class="thumbnail">
-        <center><h2>Recent Content :</h2></center>
-      </div>
-        <br />
-        <div class="thumbnail span3 center">
-          <h3>Try This...</h3>
-          <p>write about your error page conent here and give some fool a good load of information or not</p>
-          <div class="hero-unit">
-            <img src="http://placehold.it/100x100"><!--Why Not Put a Picture To Celebrate Your 404-->
-            <p></p>
-          </div>
-          <a href="#" class="btn btn-danger btn-large"><i class="icon-share icon-white"></i> Take Me There...</a>
-        </div>
-        <div class="thumbnail span3 center"> 
-          <h3>Try This...</h3>
-          <p>write about your error page conent here and give some fool a good load of information or not</p>
-          <div class="hero-unit">
-            <img src="http://placehold.it/100x100"><!--Why Not Put a Picture To Celebrate Your 404-->
-            <p></p>
-          </div>
-          <a href="#" class="btn btn-danger btn-large"><i class="icon-share icon-white"></i> Take Me There...</a>
-        </div>
-            <div class="thumbnail span3 center">
-          <h3>Try This...</h3>
-          <p>write about your error page conent here and give some fool a good load of information or not</p>
-          <div class="hero-unit">
-            <img src="http://placehold.it/100x100"><!--Why Not Put a Picture To Celebrate Your 404-->
-            <p></p>
-          </div>
-          <a href="#" class="btn btn-danger btn-large"><i class="icon-share icon-white"></i> Take Me There...</a>
-        </div>
-            <div class="thumbnail span3 center">
-          <h3>Try This...</h3>
-          <p>write about your error page conent here and give some fool a good load of information or not</p>
-          <div class="hero-unit">
-            <img src="http://placehold.it/100x100"><!--Why Not Put a Picture To Celebrate Your 404-->
-            <p></p>
-          </div>
-          <a href="#" class="btn btn-danger btn-large"><i class="icon-share icon-white"></i> Take Me There...</a>
-        </div>
-        <br />
-        <p></p>
-        <!-- By ConnerT HTML & CSS Enthusiast -->  
-    </div>
-  </div>
-</div>
-</body></html>
+    </body>
+</html>
