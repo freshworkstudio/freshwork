@@ -1,5 +1,7 @@
 <?php
-/*** CHECK IF IN DEVELOPMENT ENVIROMENT */
+$t = microtime(true);
+
+/*** CHECK IF WE'RE IN DEVELOPMENT ENVIROMENT */
 if (get_config("APP.DEVELOPMENT_ENVIRONMENT") == true) {
 	error_reporting(E_ALL);
 	@ini_set('display_errors','On');
@@ -10,51 +12,56 @@ if (get_config("APP.DEVELOPMENT_ENVIRONMENT") == true) {
 }
 ini_set('error_log', LOGS_DIR.'error.log');
 
-$hooks 		= new Hook();
-$router 	= new Router();
-$cache 		= new Cache();
-$i18n 		= new i18n();
-$fw_blocks	= new View_Block();
 
-$i18n->import_folder(LOCALE_DIR);
+//INIT APP. Start Global Objects
+$app 	= new Freshwork\App();
+$app->init();
+$app->plugins->init();
+
+
+$app->i18n->import_folder(LOCALE_DIR);
 
 //Import Routing Files of Core and App
 require_once (CORE_DIR . 'routing.php');
 require_once (CONFIG_DIR . 'routing.php');
 
 require_once("hooks.php");
-Plugin::init();
+$app->plugins->boot();
+
 trigger("fw_init");
 
 /* URI REQUEST ROUTING */
-$requested_uri = (isset($_GET['fw-url']))?$_GET['fw-url']:(isset($_SERVER['PATH_INFO'])?substr($_SERVER['PATH_INFO'],1):"");
+$requested_uri = (isset($_GET['fw_url']))?$_GET['fw_url']:(isset($_SERVER['PATH_INFO'])?substr($_SERVER['PATH_INFO'],1):"");
 $requested_uri = apply_filters('fw_requested_uri',$requested_uri);
 set_info("url",$requested_uri);
 
-//We have the file of the view.
-$view_file = $router->route_request($requested_uri);
+//Execute callbacks based on requested uri
+$app->router->execute_callbacks($requested_uri);
+
+//Based on request_uri, we check which view file we're going to load. Filtered via @file_to_load hook.
+$view_file = apply_filters("file_to_load",$app->router->route_request($requested_uri));
+
+//Get the default tempalte
+$app->view->init();
+
+
+//Define the View File to Load
+$app->view->set_view($view_file);
+
+
+
+//Load view and put the output in 'content' view block
+$view_vars = apply_filters("view_vars",array());
+$app->view->load_view($view_vars);
+
+echo apply_filters("app_html",$app->view->render());
 
 //Here we going to choose a templete to load the view on it
-$template_file = apply_filters('default_template',false);
-if(!(bool)$template_file){
-	$tpl_file = WWW_DIR."templates".DS."default.php";
-	if(file_exists($tpl_file))$template_file=$tpl_file;
-}
-set_info("template",$template_file);
 
 
-start_block("content");
-fw_include($view_file);
-end_block();
 
-if(get_info("template")){
-	start_block("layout");
-	fw_include(get_info("template"));
-	end_block();
-	echo get_block("layout");
-}else{
-	echo get_block("content");		
-}
+$t = microtime(true)-$t;
+echo "T: $t";
 
 
 

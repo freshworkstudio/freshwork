@@ -20,10 +20,9 @@ define('LOCALE_DIR',APP_DIR.'locale'.DS);
 define('DOMAIN',$_SERVER['HTTP_HOST']);
 define('ABS_URL',str_replace($_SERVER['DOCUMENT_ROOT'],'',ABS_DIR));
 define('APP_URL',ABS_URL.'fw-app/');
-define('PLUGINS_URL',APP_URL.'plugins/');
+define('PLUGINS_URL',ABS_URL.'fw-plugins/');
 define('WWW_URL',APP_URL.'www/');
 define('UPLOADS_URL',APP_URL.'uploads/');
-
 
 
 require_once (CORE_DIR. 'boot.php');

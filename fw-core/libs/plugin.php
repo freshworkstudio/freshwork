@@ -1,18 +1,16 @@
 <?php
-
-class Plugin{
-	var $name;
-	
-	
+namespace Freshwork;
+class Plugins{	
 	static function get_list(){
-		global $conf,$cache;
+		global $app;
 		$plugins = array();
-		if(get_config("APP.DEVELOPMENT_ENVIRONMENT") || $cache->get('fw-plugins') == NULL){
+		if(get_config("APP.DEVELOPMENT_ENVIRONMENT") || $app->cache->get('fw-plugins') == NULL){
 			$plugins = self::refresh_plugin_list();
-			$cache->set('fw-plugins',$plugins);
+			$app->cache->set('fw-plugins',$plugins);
 		}else{
-			$plugins = $cache->get('fw-plugins');
+			$plugins = $app->cache->get('fw-plugins');
 		}
+		
 		return $plugins;
 	}
 	static function refresh_plugin_list(){
@@ -28,7 +26,8 @@ class Plugin{
 							"name" 			=> $entrada,
 							"enabled" 		=> true,
 							"directory" 	=> PLUGINS_DIR.$entrada.DS,
-							"file"			=> $pfile);
+							"url"			=> PLUGINS_URL.$entrada."/",
+							"boot_file"	=> $pfile);
 					}
 				}
 			 
@@ -38,11 +37,13 @@ class Plugin{
 		return $plugins;
 	}
 	static function init(){
+		global $the_plugin;
 		$plugins = apply_filters('fw_plugins_list',self::get_list());
+		set_info("plugins_list",$plugins);
 		foreach($plugins as $plugin){
 			if($plugin["enabled"] == true){
-				$f = $plugin["directory"]."boot.php";
-				if(file_exists($f))include($f);
+				$the_plugin = $plugin; 
+				include($plugin["boot_file"]);
 			}
 		}
 	}

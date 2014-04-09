@@ -1,5 +1,5 @@
 <?php
-$page->template = false; ?>
+//set_info("template",false); ?>
 <html>
 <head></head>
 <body>

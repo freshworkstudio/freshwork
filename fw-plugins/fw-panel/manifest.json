@@ -1,0 +1,20 @@
+{
+	//Required
+	"code":				"freshwork/core/panel",
+	"name":				"Freshwork Admin Panel",
+	"version":			"0.1",
+	
+	//Recomended
+	"description":		"Extremely useful and easy to use administratio panel for your aplication",
+	"icon":				"images/icon.png",
+	
+	//Package dependencies
+	"require":{
+		"freswork/core":"0.1.*"
+	},
+	
+	//Optional
+	"author":			"Freshwork Studio",
+	"author_url":		"http://www.freshworkstudio.com",
+	
+}

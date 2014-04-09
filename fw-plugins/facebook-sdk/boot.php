@@ -1,33 +1,30 @@
 <?php
 /*
 Plugin Name: Facebook Developer 
-Plugin URL: http://www.freshworkcms.com/plugns/facebook-sdk
+Plugin URL: http://www.freshworkcms.com/plugins/facebook-sdk
 Version: 0.1
 Author: Freshwork Studio
 Author URL: http://www.freshworkstudio.com
 License: GPLv2
 */
-global $conf;
-load_config_file($plugin["directory"]."config.php");
+load_config_file(PLUGINS_DIR."facebook-sdk/config.php");
+
 if(get_config("FB.APPID") != ""){
 	include("facebook.php");
 	$config = array();
-	$config["appId"] = get_conf("FB.APPID");
-	$config["secret"] = get_conf("FB.APPSECRET");
+	$config["appId"] = get_config("FB.APPID");
+	$config["secret"] = get_config("FB.APPSECRET");
 	$config["fileUpload"] = true; // optional
 	
 	global $facebook; //Hacer la variable pública
 	$facebook = new Facebook($config);
 	
 	add_filter("after_render_content","facebook_body_loads");
-	add_listener("fw.after_plugins_init","facebook_start_loading");
-	
-	
-	function facebook_start_loading(){
-		global $conf,$router;
-		$router->redirect("channel.html",PLUGINS_DIR."facebook-sdk/channel.html.php");
-		$router->redirect("add-to-tab-facebook",PLUGINS_DIR."facebook-sdk/add_to_tab.php");
-	}
+	add_filter("url_routes",function($routes){
+		$routes["channel.html"] = PLUGINS_DIR."facebook-sdk/channel.html.php";
+		$routes["add-to-tab-facebook"]=PLUGINS_DIR."facebook-sdk/add_to_tab.php";
+		return $routes;
+	});
 	
 	function facebook_body_loads($site_html){
 		global $conf,$router,$page;
@@ -42,10 +39,10 @@ if(get_config("FB.APPID") != ""){
 	function get_facebook_script(){
 		global $conf,$router,$page;
 		$html = file_get_contents(PLUGINS_DIR."facebook-sdk/init.html");
-		$html = str_replace("{APP_ID}",get_conf("FB.APPID"),$html);
+		$html = str_replace("{APP_ID}",get_config("FB.APPID"),$html);
 		$html = str_replace("{BASE_URL}",DOMAIN.ABS_URL,$html);
-		$html = str_replace("{LANG}",get_conf("FB.LANG"),$html);
-		$html = str_replace("{PERMISSIONS}",get_conf("FB.PERMISSIONS"),$html);
+		$html = str_replace("{LANG}",get_config("FB.LANG"),$html);
+		$html = str_replace("{PERMISSIONS}",get_config("FB.PERMISSIONS"),$html);
 		return $html;
 	}
 }
