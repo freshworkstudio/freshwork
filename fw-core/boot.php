@@ -26,3 +26,4 @@ if(!file_exists(CONFIG_DIR.'config.php')){
 	load_config_file(CONFIG_DIR.'config.php');
 	require_once('load.php');
 }
+//Gj2HMaNsXg9s

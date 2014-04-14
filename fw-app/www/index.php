@@ -1,4 +1,5 @@
 <?php
-header("Location: ".ABS_URL."grayscale");
+header("Location: ".ABS_URL."stylish");
 //exit;
 
+ 

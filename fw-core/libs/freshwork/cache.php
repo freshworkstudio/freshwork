@@ -103,13 +103,14 @@ class Cache {
       'expire' => $expiration,
       'data'   => $data
     );
-    if (true === is_array($this->_loadCache())) {
-      $dataArray = $this->_loadCache();
+	$dataArray = $this->_loadCache();
+    if (true === is_array($dataArray)) {
       $dataArray[$key] = $storeData;
     } else {
       $dataArray = array($key => $storeData);
     }
     $cacheData = serialize($dataArray);
+
     file_put_contents($this->get_cache_dir(), $cacheData);
     return $this;
   }
@@ -122,7 +123,7 @@ class Cache {
    * @return string
    */
   public function get($key, $timestamp = false) {
-    $cachedData = unserialize($this->_loadCache());
+    $cachedData = ($this->_loadCache());
     (false === $timestamp) ? $type = 'data' : $type = 'time';
     return $cachedData[$key][$type];
   }
@@ -213,7 +214,7 @@ class Cache {
   private function _loadCache() {
     if (true === file_exists($this->get_cache_dir())) {
       $file = file_get_contents($this->get_cache_dir());
-      return json_decode($file, true);
+      return unserialize($file);
     } else {
       return false;
     }
